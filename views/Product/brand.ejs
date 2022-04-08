@@ -1,0 +1,67 @@
+<%- loggedIn ? include('../Account/loggedInNav')
+:include('../Homepage/navbar')%>
+
+    <%- include('../Homepage/searchBar',{department}) %>
+
+        <div class="container">
+            <h4 class="mb-4 brand-header">
+                <%=brand%>
+            </h4>
+            <div class="row">
+                <h6 class="mb-5">
+                    <%=totalProducts%> Products Found</h6>
+                <% Products.map(product=>{ %>
+                    <div class="brand_content_container col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                        <a href="/product/<%= product.id%>">
+                            <div style="position: relative">
+                                <img src="<%=product.Image[0]%>" class="phones-images rounded img-fluid" alt="<%= product.Name%>" />
+                                <%if(product.Sale === undefined){%>
+                                    <%}else{%>
+                                        <span style="left: 85%" class="
+              position-absolute
+              top-0
+              translate-middle
+              badge
+              rounded-pill
+              bg-success
+            ">
+            -<%=product.Discount%>%
+            <span class="visually-hidden">Discounted Price</span>
+                                        </span>
+                                        <%}%>
+                            </div>
+
+                            <div class="mt-3 product-content">
+                                <h6>
+                                    <%= product.Name%>
+                                </h6>
+                                <%if(product.Sale === undefined){%>
+                                    <p>₦
+                                        <%= product.Price.toLocaleString()%>
+                                    </p>
+                                    <%}else{%>
+                                        <span style="text-decoration: line-through">₦ <%= product.Price.toLocaleString()%></span
+          >
+
+          <p style="position: relative">
+            ₦ <%= product.Sale.toLocaleString() %>
+          </p>
+          <%} %>
+        </div>
+      </a>
+    </div>
+
+    <% })%>
+  </div>
+  <div class="pagination_container">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <%for(var i=0; i<totalPages; i++){%>
+            <li class="page-item"><a class="page-link" href="/<%=brand%>?page=<%=i+1%>"><%=i+1%></a></li>
+        <%}%>
+            
+      </ul>
+    </nav>
+  </div>
+</div>
+<%- include('../partials/footer') %>

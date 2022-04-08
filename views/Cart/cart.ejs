@@ -1,0 +1,133 @@
+<%- loggedIn ? include('../Account/loggedInNav')
+:include('../Homepage/navbar')%>
+    <%-
+include('../Homepage/searchBar',{department}) %>
+
+        <section>
+            <div class="cart_header">
+                <h3>Your Shopping Bag</h3>
+                <div class="cart_divider"></div>
+            </div>
+            <div class="cart_body mt-5 mb-5">
+                <div class="mt-4 container cart_container">
+                    <%if(!loggedIn){%>
+                        <h6>
+                            You're signed out right now. To save these items or see your previously saved items, <a href="/login">sign in.</a>
+                        </h6>
+                        <%}else{%>
+                            <% }%>
+                                <div class="row">
+                                    <div class="col-lg-9 col-md-12">
+                                        <div class="row">
+                                            <% foundCartItems.map(item=>{ %>
+                                                <div class="col-lg-9 col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
+                                                            <a style="text-decoration: none; color:black" href="/product/<%=item.ProductId%>">
+                                                            <img class="img-fluid cart_product_image" src="<%=item.Image%>" alt="" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-6 col-xs-6">
+                                                            <div class="row">
+                                                                <div class="cart-product-details col-lg-6 col-md-12">
+                                                                    <a style="text-decoration: none; color:black" href="/product/<%=item.ProductId%>">
+                                                                        <p class="mb-1">
+                                                                            <%=item.Name%>
+                                                                        </p>
+                                                                        <p class="mb-1">Condition: New</p>
+                                                                        <%if(item.Sale === undefined){%>
+                                                                            <p>₦
+                                                                                <%=item.Price.toLocaleString()%>
+                                                                            </p>
+                                                                            <%}else{%>
+                                                                                <div style="position: relative;">
+                                                                                    <span style="left:85%" class="position-absolute top-0 translate-middle badge rounded-pill bg-success">
+                                     -<%=item.Discount%>%
+                                    <span class="visually-hidden">Discounted Price</span>
+                                                                                    </span>
+                                                                                    <span style="text-decoration:line-through;">₦ <%=item.Price.toLocaleString()%></span>
+
+                                                                                    <p style="position: relative;">₦
+                                                                                        <%=item.Sale.toLocaleString()%>
+                                                                                    </p>
+                                                                                </div>
+
+                                                                                <%} %>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-lg-6 col-md-12">
+                                                                    <form action="cart.payment/change/<%- item.ProductId === undefined? item.id: item.ProductId%>" method="post">
+                                                                        <div style="max-width: 120px; min-width: 120px" class="input-counter">
+                                                                            <span class="minus-btn"><i class="bi bi-dash-circle-fill"></i
+                          ></span>
+                                                                            <input id="product-quantity" class="product-input" type="number" value="<%= item.Quantity %>" max="<%=item.maxQuantity%>" name="quantity" min="1" onchange="this.form.submit()" />
+                                                                            <span class="plus-btn"><i class="bi bi-plus-circle-fill"></i
+                          ></span>
+                                                                        </div>
+                                                                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                                                    </form>
+                                                                    <form class="mt-4" action="/remove-cart" method="post">
+                                                                        <input type="hidden" name="name" value="<%if(loggedIn){%><%=item.id %><%}else{%><%=item.ProductId %><% }%>" />
+                                                                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+
+                                                                        <button type="submit" class="card-link-secondary small text-uppercase mr-3 btn btn-danger btn-sm">
+                          <i class="fas fa-trash-alt mr-1"></i>
+                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                </div>
+                                                <% })%>
+                                        </div>
+                                    </div>
+                                    <!-- Checkout -->
+                                    <% if(foundCartItems.length>0){%>
+
+                                        <div class="col-lg-3 col-md-12 cart_checkout_summary">
+                                            <div class="row">
+                                                <h6>Price Summary</h6>
+                                                <div class="col-6 cart_shipping_details">
+                                                    <p>Subtotal</p>
+                                                    <p>Shipping</p>
+                                                    <p class="total">Total</p>
+                                                </div>
+                                                <div class="col-6 cart_shipping_details">
+                                                    <p>₦
+                                                        <%=subtotal.toLocaleString()%>
+                                                    </p>
+                                                    <p>₦
+                                                        <%=shipping.toLocaleString()%>
+                                                    </p>
+                                                    <p class="total">₦
+                                                        <%=total.toLocaleString()%>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <% if(loggedIn) { %>
+                                                <div class="mt-3">
+                                                    <a href="/pay.marketnest/confirm/order" class="product-add-to-cart btn btn-primary mb-2">
+              Continue To Checkout</a
+            >
+          </div>
+                  <% }else { %>
+        <div class="col-lg-3 col-md-12 cart_checkout_summary">
+          <a class="btn btn-primary" href="/login">Checkout</a>
+                                                </div>
+
+                                                <% }%>
+                                        </div>
+
+                                        <% }else{%>
+                                            <div class="col-lg-3 col-md-12 cart_checkout_summary">
+                                                <a class="btn btn-primary" href="/">Start Shopping</a>
+                                            </div>
+                                            <% }%>
+                                </div>
+                </div>
+            </div>
+        </section>
+
+        <%- include('../partials/footer') %>

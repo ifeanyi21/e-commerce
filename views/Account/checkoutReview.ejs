@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../../styles/index.css" />
+    <title>Market Nest</title>
+</head>
+
+<body>
+    <header class="checkout-header mt-3">
+        <a style="text-decoration: none; color: royalblue" href="/">
+            <h4>Market Nest</h4>
+        </a>
+    </header>
+    <div class="container mt-5">
+        <h5 class="checkout-container-header">Checkout</h5>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="mt-4 checkout_shipping_address">
+                            <h6>Shipping Information</h6>
+                            <%if(address === false){ %>
+                                <form class="row g-3" action="/checkout/add-new/address" method="POST">
+                                    <div class="col-md-6">
+                                        <label for="newfname" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="newfname" name="fname" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="newlname" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="newlname" name="lname" />
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="Address" class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="Address" placeholder="" name="street" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="state" class="form-label">State</label>
+                                        <select class="form-select" aria-label="States" id="state" name="state">
+                      <option value="Delta">Delta</option>
+                      <option value="Enugu">Enugu</option>
+                      <option value="Lagos">Lagos</option>
+                    </select>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="inputCity" class="form-label">City</label>
+                                        <input type="text" class="form-control" id="inputCity" name="city" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputZip" class="form-label">Zip</label>
+                                        <input type="text" class="form-control" id="inputZip" name="zip_code" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="number" class="form-label">Number</label>
+                                        <input type="number" class="form-control" id="number" required name="number" />
+                                    </div>
+                                    <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">
+                      Add New Address
+                    </button>
+                                    </div>
+                                </form>
+                                <%}else{%>
+                                    <button class="btn btn-sm btn-primary checkout_change_address" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Change address
+                </button>
+                                    <button class="btn btn-sm checkout_change_address_icon" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="bi bi-pencil-fill"></i>
+                </button>
+                                    <div class="modal fade" id="addaddress" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                        Add new address
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form class="row" action="/checkout/add-address" method="POST">
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="newfname" class="form-label">First Name</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="newfname"
+                              name="fname"
+                              placeholder="First Name"
+                            />
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label for="newlname" class="form-label"
+                              >Last Name</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="newlname"
+                              name="lname"
+                              placeholder="Last Name"
+                            />
+                          </div>
+                          <div class="col-12 mb-3">
+                            <label for="Address" class="form-label"
+                              >Address</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="Address"
+                              placeholder="Street"
+                              name="street"
+                            />
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label for="state" class="form-label">State</label>
+                                                            <select class="form-select" aria-label="States" id="state" name="state">
+                              <option value="Delta">Delta</option>
+                              <option value="Enugu">Enugu</option>
+                              <option value="Lagos">Lagos</option>
+                            </select>
+                                                        </div>
+
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="inputCity" class="form-label">City</label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="inputCity"
+                              name="city"
+                              placeholder="City"
+                            />
+                          </div>
+                          <div class="col-md-6 mb-3">
+                            <label for="inputZip" class="form-label">Zip</label>
+                                                            <input type="text" class="form-control" id="inputZip" name="zip_code" placeholder="Zip Code" />
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            <label for="number" class="form-label">Number</label
+                            >
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="number"
+                              required
+                              name="number"
+                              placeholder="Number"
+                            />
+                          </div>
+                          <input
+                            type="hidden"
+                            name="_csrf"
+                            value="<%=csrfToken%>"
+                          />
+
+                          <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary">
+                              Add New Address
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="exampleModal"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <%if(address.length === 1 ){ %>
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          <button
+                            class="btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#addaddress"
+                          >
+                            Add a new address
+                          </button>
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                    </div>
+                    <%}else{%>
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Select Address
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <button
+                        class="btn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addaddress"
+                      >
+                        Add a new address
+                      </button>
+                      <form
+                        action="/update/checkout/address"
+                        method="post"
+                        class="row g-3"
+                        id="new-address"
+                      >
+                        <div class="modal-body">
+                          <% address.map((item, index)=>{ %>
+                          <%if(item.defaultAddress==="No"){%>
+                          <div class="mb-2 addresses_container">
+                            <input
+                              type="radio"
+                              name="address"
+                              value="<%=item.id %>"
+                            />
+                            <p><%= item.first_name %> <%= item.last_name %></p>
+                            <p><%= item.street %></p>
+                            <p><%= item.state%></p>
+                            <p><%= item.city %></p>
+                            <p><%=item.zipcode %></p>
+                            <p><%= item.number %></p>
+                            <hr />
+                          </div>
+                          <% }else{%> <% }%> <%}) %>
+                        </div>
+                        <input
+                          type="hidden"
+                          name="_csrf"
+                          value="<%=csrfToken%>"
+                        />
+                        <div class="modal-footer" style="border-top: 0px">
+                          <button
+                            type="submit"
+                            class="btn btn-primary"
+                            id="submitbtn"
+                          >
+                            Update
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <%}%>
+                  </div>
+                </div>
+                <% address.map((item, index)=>{ %> <%
+                if(item.defaultAddress==="Yes"){%>
+                <div class="checkout_shipping_address_info">
+                  <p><%=item.first_name%> <%=item.last_name%></p>
+                  <p><%=item.street%></p>
+                  <p><%= item.state%></p>
+                  <p><%=item.city%></p>
+                  <p><%=item.zipcode%></p>
+                  <p><%=item.number%></p>
+                </div>
+                <%}else{%> <%}%> <%})%> <%}%>
+              </div>
+            </div>
+            <div class="col-lg-12 mt-3">
+              <div class="checkout_shipping_method">
+                <h6>Shipping Method</h6>
+                <div class="checkout_shipping_method_details">
+                  <p>Standard Shipping</p>
+                  <p>Est delivery in 1-3 business days</p>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3 col-lg-12">
+              <div class="checkout_items">
+                <h6>Items</h6>
+                <div class="row">
+                  <% foundCartItems.map(item=>{ %>
+                  <div class="col-lg-6">
+                    <div class="row mb-5">
+                      <div class="col-sm-6">
+                        <img
+                          class="checkout_items_product img-fluid"
+                          src="<%=item.Image%>"
+                          alt="<%=item.Name%>"
+                          srcset=""
+                        />
+                      </div>
+                      <div class="col-sm-6 checkout_items_subtitle">
+                        <p><%=item.Name%></p>
+                      </div>
+                    </div>
+                  </div>
+                  <% }) %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 col-md-4">
+          <div class="row price_summary">
+            <h6 class="mb-3">Price Summary</h6>
+            <div class="col-6 checkout_price_summary">
+              <p>Subtotal</p>
+              <p>Shipping</p>
+              <p class="total">Total</p>
+            </div>
+            <div class="col-6 checkout_price_summary">
+              <p>₦ <%=subtotal.toLocaleString()%></p>
+              <p>₦ <%=shipping.toLocaleString()%></p>
+              <p class="total">₦ <%=total.toLocaleString()%></p>
+            </div>
+          </div>
+        </div>
+        
+        <%if(address === false){%>
+        <div
+          style="width: 250px; margin: auto"
+          class="btn btn-secondary col-lg-12 mt-5"
+        >
+          Add an address to continue
+        </div>
+        <%}else{%>
+        <div class="checkout_button_container col-lg-12 mt-5">
+          <form action="/transaction/initialize" method="POST">
+            <input type="hidden" name="user_email" value="<%=user %>" />
+            <input type="hidden" name="amount" value="<%= total *100 %>" />
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+            <button
+              class="checkout_button btn btn-primary"
+              type="submit"
+              name="pay_now"
+              id="pay-now"
+              title="Pay now"
+            >
+              <img
+                style="height: 20px"
+                src="../../Images/paystack.webp"
+                alt="Paystack Icon"
+              />
+              Checkout
+            </button>
+          </form>
+        </div>
+        <%} %>
+        <div class="text-center mt-4">
+          <a href="/cart.payment" class="text-center btn btn-danger" style="width:100px">Cancel</a>
+        </div>
+        
+      </div>
+    </div>
+    <footer class="mt-5 mb-5" style="text-align: center">Market Nest</footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../scripts/script.js"></script>
+    <script
+      src="https://kit.fontawesome.com/b515d76414.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

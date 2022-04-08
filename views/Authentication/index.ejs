@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        <%=name%>
+    </title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="../../Images/favicon.jpg" type="image/x-icon" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+
+    <link href="/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" />
+
+    <link rel="stylesheet" type="text/css" href="../../styles/main.css" />
+    <link rel="stylesheet" type="text/css" href="../../styles/util.css" />
+</head>
+
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+      <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path
+          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
+        />
+      </symbol>
+    </svg>
+    <div class="limiter">
+        <a style="
+          text-align: center;
+          text-decoration: none;
+          text-transform: uppercase;
+        " href="/">
+            <h2 class="mt-5">Market Nest</h2>
+        </a>
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-pic js-tilt" data-tilt>
+                    <img src="../../Images/img-01.png" alt="IMG" />
+                </div>
+
+                <form onSubmit="login()" action="/login" method="post" class="login100-form validate-form">
+                    <span class="login100-form-title"> Member Login </span>
+
+                    <% message.map(error=>{%>
+                        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert" role="alert">
+                            <%- error.msg %>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <%})%>
+                            <% if(messages===undefined){%>
+                                <%}else { %>
+                                    <%if(messages==="Account Verified!") {%>
+                                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+                <use xlink:href="#check-circle-fill" />
+              </svg>
+                                            <h4 class="alert-heading">Account Verified!</h4>
+                                        </div>
+                                        <%}else{%>
+                                            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert" role="alert">
+                                                <%= messages %>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                            <%}%>
+                                                <%}%>
+
+                                                    <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                                                        <input class="input100" type="text" name="email" placeholder="Email"/>
+                                                        <span class="focus-input100"></span>
+                                                        <span class="symbol-input100">
+                <i class="bi bi-envelope-fill"></i>
+              </span>
+                                                    </div>
+
+                                                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                                                        <input class="input100" type="password" name="password" placeholder="Password" id="inputField" required />
+                                                        <span class="focus-input100"></span>
+                                                        <span class="symbol-input100">
+                <i class="bi bi-lock-fill"></i>
+              </span>
+                                                    </div>
+                                                    <div class="form-check mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="shwpwd" onclick="myFunction()" style="padding: 0px" />
+                                                        <label style="color: #959595; font-size: 14px" class="form-check-label" for="shwpwd">
+                Show Password
+              </label>
+                                                    </div>
+
+                                                    <div class="container-login100-form-btn">
+                                                        <p id="loading" class="text-success" style="display: none">
+                                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Logging In...
+                                                        </p>
+                                                        <button id="siginbtn" type="submit" class="login100-form-btn">
+                Login
+              </button>
+                                                    </div>
+
+                                                    <p style="display: flex; justify-content: center">
+                                                        <span class="btn-round">or</span>
+                                                    </p>
+                                                    <div style="padding: 0px 10px" class="col">
+                                                        <div class="col-12">
+                                                            <a style="width: 100%" href="/auth/google" class="google btn">
+                                                                <i class="fab fa-google"></i> Login with Google
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="text-center p-t-12">
+                                                        <span class="txt1"> Forgot </span>
+                                                        <a class="txt2" href="/reset/usr/password"> Password? </a>
+                                                    </div>
+
+                                                    <div class="text-center p-t-20">
+                                                        <a class="txt2" href="/sign-up"> Create your Account </a>
+                                                    </div>
+                                                    <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+        function myFunction() {
+            const inputField = document.getElementById("inputField");
+            if (inputField.type === "password") {
+                inputField.type = "text";
+            } else {
+                inputField.type = "password";
+            }
+        }
+
+        function login() {
+            const signinbtn = document.getElementById("siginbtn");
+            const loader = document.getElementById("loading");
+            signinbtn.style = "display: none";
+            loader.style = "display:block";
+        }
+    </script>
+</body>
+
+</html>

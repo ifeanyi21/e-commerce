@@ -1,0 +1,280 @@
+<%- loggedIn ? include('loggedInNav') :include('../Homepage/navbar')%>
+
+    <%-
+include('../Homepage/searchBar',{department}) %>
+        <div class="container mb-5 mt-4">
+
+            <div class='row'>
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <!-- nav for large screens -->
+                    <div class="sidebar-large">
+                        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+                            <h5 style="text-align:center">My Nest</h5>
+                            <hr>
+                            <ul class="nav nav-pills flex-column mb-auto">
+                                <li class="nav-item">
+                                    <a href="/usr/account" class="nav-link " aria-current="page"><i class="fas fa-receipt"></i> Account Overview
+                                </a>
+                                </li>
+                                <li>
+                                    <a href="/account/address-book" class="nav-link link-dark ">
+                                        <i class="fas fa-address-card"></i> Address Book
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/customer/orders" class="nav-link link-dark active"><i class="fas fa-table"></i> Orders
+                                </a>
+                                </li>
+                                <li>
+                                    <a href="/customer/wishlist" class="nav-link link-dark"><i class="bi bi-heart-fill"></i> Saved Items
+                                </a>
+                                </li>
+                            </ul>
+                            <hr>
+                            <div class="dropdown">
+                                <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-circle"></i> Account
+                            </a>
+                                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+
+                                    <li>
+                                        <a class=" dropdown-item" href="/update/password"> <i class="bi bi-key-fill"></i></i> Change Password</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="/account/details"><i class="fas fa-user-circle"></i> Profile</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side bar for smaller screens -->
+                    <div class="sidebar-small">
+                        <div class="d-flex flex-column flex-shrink-0 bg-light">
+                            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                                <li class="nav-item">
+                                    <a href="/usr/account" class="nav-link  py-3 border-bottom" aria-current="page" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Account Review">
+                                        <i class="fas fa-receipt"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/account/address-book" class="nav-link py-3 border-bottom " title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Address"><i class="fas fa-address-card"></i>
+                                </a>
+                                </li>
+                                <li>
+                                    <a href="/customer/orders" class="active nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                                        <i class="fas fa-table"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/customer/wishlist" class="nav-link py-3 border-bottom" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Saved Items"><i class="bi bi-heart-fill"></i>
+                                </a>
+                                </li>
+
+                            </ul>
+                            <div class="dropdown border-top">
+                                <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-user-circle"></i>
+                                </a>
+                                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+
+                                    <li>
+                                        <a class="dropdown-item" href="/update/password"> <i class="bi bi-key-fill"></i></i> Change Password</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="/account/details"><i class="fas fa-user-circle"></i> Profile</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                    <h2 class="mb-4" style="text-align: center;">Order History</h2>
+                    <div class="accordion" id="accordionExample">
+                        <%if(Orders.length<=0){%>
+                            <h6 style='text-align:center' class='mb-4'>No Recent Orders</h6>
+                            <%}else{%>
+
+                                <% Orders.map((order,index)=>{ %>
+                                    <div class="accordion-item">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%=index%>" aria-expanded="true" aria-controls="collapse<%=index%>">
+                        <div class='row order_heading'>
+                            <div class="col-lg-3 col-md-12">
+                                <div class="mb-3 order_order_number">
+                                    Order # 
+                                <div>
+                                    <%=order.OrderId %>
+                                </div>
+                                </div>
+                               
+                            </div>
+                            <div class="order-date col-lg-3 col-md-6 col-sm-6">
+                                <div class="mb-2 order_order_date">
+                                    Order Date
+                                <div>
+                                     <% let options = { year: "numeric", day: "numeric",
+                                            month:"short", }; %> <% const date
+                                                =JSON.stringify(order.dateOrdered); %> <% const ymd =
+                                            date.substring(0, 11); %> <% const nymd = new
+                                            Date(ymd).toLocaleDateString("en-us", options); %>
+                                     <%=nymd %>
+                                </div>
+                                </div>
+                                
+                            </div>
+                            <div class="order-total col-lg-3 col-md-6 col-sm-6">
+                                <div class=" mb-2 order_order_total">
+                                    Order Total
+                                <div>
+                                    ₦<%=order.Total.toLocaleString()%>
+                                </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-3 col-md-12 col-sm-12">
+                                <div class="order_order_status">
+                                    <%if(order.orderStatus===25){%>
+                                        Processing
+                                        <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%=order.orderStatus%>" aria-valuemin="0" aria-valuemax="100" style="width:<%=order.orderStatus%>%"></div>
+                                    </div>
+                                    <%}if(order.orderStatus===50){%>
+                                        Ready to be shipped
+                                        <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%=order.orderStatus%>" aria-valuemin="0" aria-valuemax="100" style="width:<%=order.orderStatus%>%"></div>
+                                    </div>
+                                    <%}if(order.orderStatus===75){%>
+                                        Shipped
+                                        <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%=order.orderStatus%>" aria-valuemin="0" aria-valuemax="100" style="width:<%=order.orderStatus%>%"></div>
+                                    </div>
+                                    <%}if(order.orderStatus===100){%>
+                                        Delivered
+                                        <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width:100%" aria-valuenow="100"  aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    <%}%>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+
+                                        <div id="collapse<%=index%>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <h6>Order Details</h6>
+                                                <div class='row order_order_details'>
+                                                    <div class="mb-3 col-lg-6 col-md-6 col-sm-12 ">
+                                                        <b> Shipping Information</b>
+                                                        <div>
+                                                            <p>
+                                                                <%=order.shippingAddress.firstName %>
+                                                                    <%=order.shippingAddress.lastName %>
+                                                            </p>
+                                                            <p>
+                                                                <%=order.shippingAddress.street %>
+                                                            </p>
+                                                            <p>
+                                                                <%=order.shippingAddress.state %>
+                                                            </p>
+                                                            <p>
+                                                                <%=order.shippingAddress.city %>
+                                                            </p>
+                                                            <p>
+                                                                <%=order.shippingAddress.zipcode %>
+                                                            </p>
+                                                            <p>
+                                                                <%=order.shippingAddress.number %>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                                        <b> Shipping Method</b>
+                                                        <div>
+                                                            <p>Standard Shipping</p>
+                                                            <p>Est delivery in 1-3 business days</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                                                        <div class='mt-3 col-lg-12'>
+                                                            <b>Items</b>
+                                                            <div class="row">
+                                                                <div class="col-lg-12 mb-2">
+                                                                    <%order.Image.map((image,index)=>{%>
+
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <img class="order_items_product img-fluid" src="<%=image%>" alt="<%=order.Name[index]%>">
+                                                                            </div>
+                                                                            <div class="col-sm-6 order_items_subtitle">
+                                                                                <p>
+                                                                                    <%=order.Name[index]%>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                        <%})%>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 col-sm-12">
+                                                        <div class="row">
+                                                            <b>Order Total</b>
+                                                            <div class="col-6 cart_shipping_details">
+                                                                <p>Subtotal</p>
+                                                                <p>Shipping</p>
+                                                                <p class='total'>Total</p>
+                                                            </div>
+                                                            <div class="col-6 cart_shipping_details">
+                                                                <p>₦
+                                                                    <%=order.subtotal.toLocaleString()%>
+                                                                </p>
+                                                                <p>₦
+                                                                    <%=order.shippingCost.toLocaleString()%>
+                                                                </p>
+
+                                                                <p class='total'>₦
+                                                                    <%=order.Total.toLocaleString()%>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <% }) %>
+                                            <%}%>
+                                    </div>
+                    </div>
+
+                </div>
+                <div class="pagination_container mt-4">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <%for(var i=0; i<totalPages; i++){%>
+                                <li class="page-item">
+                                    <a class="page-link" href="/customer/orders?page=<%=i+1%>">
+                                        <%=i+1%>
+                                    </a>
+                                </li>
+                                <%}%>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+
+            <%- include('../partials/footer') %>

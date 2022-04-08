@@ -1,0 +1,130 @@
+<%- loggedIn ? include('../Account/loggedInNav') :include('../Homepage/navbar')%>
+    <%- include('../Homepage/searchBar',{department}) %>
+        <div class="container mt-5 mb-5">
+            <div style="text-align: center" class="row">
+                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                    <div class="product-img-container">
+                        <a class="prev" onclick="plusSlides(-1)"><i class="bi bi-arrow-left-circle-fill"></i
+            ></a>
+                        <a class="next" onclick="plusSlides(1)"><i class="bi bi-arrow-right-circle-fill"></i
+            ></a>
+                        <% result.Image.map((image)=>{%>
+                            <div class="mySlides">
+
+                                <img class="product-img-gallery" src="<%=image%>" alt="<%=result.Name%>" />
+                            </div>
+
+                            <%})%>
+                                <div class="row thumnail-row mt-3">
+                                    <% result.Image.map((image,index)=>{%>
+                                        <%=image.Name%>
+                                            <div class="column">
+                                                <img class="demo cursor product-gallery-thumbnail" src="<%=image%>" onclick="currentSlide(`<%=index+1%>`)" alt="<%= result.Name%>" />
+                                            </div>
+
+                                            <%})%>
+                                </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                    <div class="product-description-content">
+                        <h4>
+                            <%= result.Name%>
+                        </h4>
+                        <span>Brand: <a style="text-decoration: none;" href="/<%=result.Brand%>" >
+                            <%= result.Brand%>
+                        </a> </span>
+                        <%if(result.Sale === undefined){%>
+                            <h6 class="mt-1">₦
+                                <%= result.Price.toLocaleString() %>.00</h6>
+                            <%}else{%>
+                                <div style="position: relative;">
+                                    <span style="left:85%" class="position-absolute top-0 translate-middle badge rounded-pill bg-success">
+                                     -<%=result.Discount%>%
+                                    <span class="visually-hidden">Discounted Price</span>
+                                    </span>
+                                    <span style="text-decoration:line-through;">₦ <%=result.Price.toLocaleString()%></span>
+
+                                    <p style="position: relative;">₦
+                                        <%=result.Sale.toLocaleString()%>
+                                    </p>
+                                </div>
+
+                                <%}%>
+                                    <p>
+                                        <% const shortdescription= result.Description.substring(0,100) %>
+                                            <%= shortdescription %>...<a href="#description">Read More</a></p>
+
+                                    </p>
+                    </div>
+                    <hr />
+                    <div class="product-form-container">
+                        <form class="product-form" action="/product/<%= result._id %>" method="post">
+                            <p>Quantity</p>
+                            <div class="input-counter">
+                                <span class="minus-btn"><i class="bi bi-dash-circle-fill"></i
+                ></span>
+                                <input id="product-quantity" class="product-input" type="number" min=1 value="1" name='quantity' max="<%= result.Quantity %>" />
+                                <span class="plus-btn"><i class="bi bi-plus-circle-fill"></i
+                ></span>
+                            </div>
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <div class="mt-3 d-grid gap-2">
+                                <button type="submit" class="product-add-to-cart btn btn-primary mb-2">
+                  ADD TO CART
+                </button>
+                            </div>
+                        </form>
+                        <% if (wishlist===true) { %>
+                            <div class="mt-3 d-grid gap-2">
+                                <a href='/wishlist-add/<%= result._id %>' style="border-radius: 20px;" id="cart" class="btn btn-success"><span><i class="bi bi-heart"></i> Add to Wishlist</span></a>
+                            </div>
+                            <%}else { %>
+                                <span><i class="bi bi-heart-fill"></i> Already in wishlist</span>
+                                <%}%>
+
+                    </div>
+                </div>
+            </div>
+
+            <section class="mt-5 product-description-container" id="description">
+                <div class="col-lg-12">
+                    <h4 class="mb-4">
+                        <%= result.Name%>
+                    </h4>
+                    <h6>Description</h6>
+                    <p>
+                        <%= result.Description%>
+                    </p>
+                </div>
+                <div class="product-divider-style"></div>
+            </section>
+            <section class="mt-5" id="product-you-may-also-like">
+                <h4 class="mb-4">You may also like</h4>
+                <div class="col-lg-12">
+                    <div class="row row-container">
+                        <%youMayAlsoLike.map(alt=>{%>
+                            <div class="product_content_container col-lg-3 col-md-3 col-sm-6 col-xs-6">
+                                <a href="/product/<%=alt.id%>">
+                                    <img class='img-fluid product_you_may_like' src="<%=alt.Image[0]%>" alt="<%=alt.Name%>" />
+                                <div class="product-content mt-3">
+                                    <h6>
+                                        <%=alt.Name%>
+                                    </h6>
+                                    <p>₦
+                                        <%=alt.Price.toLocaleString()%>
+                                    </p>
+                                </div>
+                                 </a>
+                            </div>
+                            <%})%>
+
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+        <script src="../../scripts/slides.js"></script>
+
+        <%- include('../partials/footer') %>

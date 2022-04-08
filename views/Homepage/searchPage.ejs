@@ -1,0 +1,203 @@
+<%- loggedIn ? include('../Account/loggedInNav') :include('navbar')%>
+    <%-
+include('../Homepage/searchBar',{department}) %>
+        <h4 class="mb-5" style="text-align: center">
+            <%= category%>
+        </h4>
+        <div class="container mt-5 mb-5">
+            <div class="sort-container">
+                <% if(found.length === 0){ %>
+                    <% }else{%>
+                        <h6 class="results mb-4">
+                            <%=totalProducts%> Results</h6>
+                        <%}%>
+            </div>
+            <div class="hidden-category mb-3">
+                <div class="btn-group">
+                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Categories
+      </button>
+                    <ul class="dropdown-menu">
+                        <% searchdepartment.map((item,index)=>{ %>
+                            <li>
+                                <a class="dropdown-item" href="/sch/itm/?cat=<%=index+1%>">
+                                    <%=item%>
+                                </a>
+                            </li>
+                            <%})%>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3 other-department">
+                    <% searchdepartment.map((item,index)=>{ %>
+                        <div class="mb-4">
+                            <a style="color: black" href="/sch/itm/?cat=<%=index+1%>">
+                                <%=item%>
+                            </a>
+                        </div>
+                        <%})%>
+                </div>
+                <div class="col-9 search-container">
+                    <% if(found.length === 0){ %>
+                        <p>
+                            No Item was found with the Parameters Passed. Search for different Items
+                        </p>
+                        <a class="btn btn-primary" href="/">Return Home</a>
+                        <% }else{%>
+                            <div class="placeholder-container search_content_container sch col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                                <div class="row">
+                                        <div class="col-5">
+                                            <div class="video"></div>
+                                        </div>
+                                        <div class="col-7">
+                                            <div class="mt-2 product-content">
+                                                <div class="mb-2" style="font-size: 1rem">
+                                                    <p aria-hidden="true">
+                                                        <span class="placeholder col-12"></span>
+                                                        </p>
+                                                </div>
+                                                <div class="mb-2" style="font-size: 0.7rem">
+                                                    <p aria-hidden="true">
+                                                        <span class="placeholder col-12"></span>
+                                                        </p>
+                                                </div>
+                                                <div class="mb-2" style="font-size: 1rem">
+                                                    <p aria-hidden="true">
+                                                        <span class="placeholder col-12"></span>
+                                                        </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="placeholder-container search_content_container sch col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                                <div class="row">
+                                        <div class="col-5">
+                                            <div class="video"></div>
+                                        </div>
+                                        <div class="col-7">
+                                            <div class="mt-2 product-content">
+                                                <div class="mb-2" style="font-size: 1rem">
+                                                    <p aria-hidden="true">
+                                                        <span class="placeholder col-12"></span>
+                                                        </p>
+                                                </div>
+                                                <div class="mb-2" style="font-size: 0.7rem">
+                                                    <p aria-hidden="true">
+                                                        <span class="placeholder col-12"></span>
+                                                        </p>
+                                                </div>
+                                                <div class="mb-2" style="font-size: 1rem">
+                                                    <p aria-hidden="true">
+                                                        <span class="placeholder col-12"></span>
+                                                        </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="placeholder-container search_content_container sch col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                                <div class="row">
+                                        <div class="col-5">
+                                            <div class="video"></div>
+                                        </div>
+                                        <div class="col-7">
+                                            <div class="mt-2 product-content">
+                                                <div class="mb-2" style="font-size: 1rem">
+                                                    <p aria-hidden="true">
+                                                        <span class="placeholder col-12"></span>
+                                                        </p>
+                                                </div>
+                                                <div class="mb-2" style="font-size: 0.7rem">
+                                                    <p aria-hidden="true">
+                                                        <span class="placeholder col-12"></span>
+                                                        </p>
+                                                </div>
+                                                <div class="mb-2" style="font-size: 1rem">
+                                                    <p aria-hidden="true">
+                                                        <span class="placeholder col-12"></span>
+                                                        </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                           
+                            <% found.map(item=>{ %>
+                               
+                                <div class="search_content_container sch col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-3">
+                                    <a href="/product/<%=item.id%>">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <img src="<%=item.Image[0]%>" class="search-images" alt="" />
+                                            </div>
+                                            <div class="col-7">
+                                                <div class="mt-2 product-content">
+                                                    <div>
+                                                        <h6 class="search-body-name">
+                                                            <%=item.Name%>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="mb-2" style="font-size: 0.7rem">
+                                                        <span>Color: <%=item.Subtitle%></span>
+                                                        <span style="display: none" class="subtitles">|<span> </span><span>Subtitle </span>|<span> </span><span>Subtitle</span></span>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <%if(item.Sale === undefined){%>
+                                                            <h5 class="search-price">
+                                                                ₦
+                                                                <%=item.Price.toLocaleString()%>.00
+                                                            </h5>
+                                                            <%}else{%>
+                                                                <div style="position: relative;">
+                                                                    <span style="left:85%" class="position-absolute top-0  translate-middle badge rounded-pill bg-success">
+                                     -<%=item.Discount%>%
+                                    <span class="visually-hidden">Discounted Price</span>
+                                                                    </span>
+                                                                    <span style="text-decoration:line-through;">₦ <%=item.Price.toLocaleString()%></span>
+
+                                                                    <p style="position: relative;">₦
+                                                                        <%=item.Sale.toLocaleString()%>
+                                                                    </p>
+                                                                </div>
+
+
+                                                                <%} %>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <% }) %>
+                                    <% } %>
+                </div>
+            </div>
+            <div class="pagination_container">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <%for(var i=0; i<totalPages; i++){%>
+                            <li class="page-item">
+                                <a class="page-link" href="<%=query%>&page=<%=i+1%>">
+                                    <%=i+1%>
+                                </a>
+                            </li>
+                            <%}%>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <script>
+ 
+            $(function() {
+              $('.placeholder-container').addClass('noPlaceHolder')
+            });
+           
+        </script>
+
+        <%- include('../partials/footer') %>

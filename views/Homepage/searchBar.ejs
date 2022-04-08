@@ -1,0 +1,64 @@
+<style>
+    .ui-autocomplete {
+        max-height: 140px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+    
+    * html .ui-autocomplete {
+        height: 100px;
+    }
+</style>
+<div class="search-box mt-1">
+    <form action="/sch/itm/" method="post">
+        <div class="input-group mb-3 ui-widget">
+            <select name="department" class="selectInput input-group-text" id="basic-addon3">
+        <% department.map((item,index)=>{ %>
+        <option value="<%=index%>"><%=item%></option>
+        <%})%>
+      </select>
+            <input type="text" placeholder="Search..." name="search" class="form-control search-input" id="search_box" aria-describedby="basic-addon3" value="<%=search%>" autocomplete="off" />
+            <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
+            <button type="submit" class="btn btn-outline-primary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="18"
+          fill="currentColor"
+          class="bi bi-search"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+          />
+        </svg>
+        <span class="search-btn">Search</span>
+      </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $("#search_box").autocomplete({
+            source: async function(req, res) {
+                let data = await fetch(
+                        `https://sleepy-hollows-26124.herokuapp.com/auto/?search=${req.term}`
+                    )
+                    .then((results) => results.json())
+                    .then((results) =>
+                        results.map((result) => {
+                            return {
+                                label: result.Name,
+                                value: result.Name,
+                                id: result._id,
+                            };
+                        })
+                    )
+                    .catch(console.error());
+                res(data);
+            },
+            minLength: 2,
+        });
+    });
+</script>
